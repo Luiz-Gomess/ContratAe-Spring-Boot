@@ -19,10 +19,10 @@ public class Candidato {
     private String senha;
 
     @ElementCollection
-    private List<String> requisitos;
-    @ManyToMany(mappedBy = "candidaturas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<String> habilidades;
 
-    private List<Vaga> candidaturas;
+    @ManyToMany(mappedBy = "candidaturas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Integer> candidaturas;
 
     public String getCpf() {
         return cpf;
@@ -56,21 +56,19 @@ public class Candidato {
         this.senha = senha;
     }
 
-    public List<String> getRequisitos() {
-        return requisitos;
+    public List<String> getHabilidades() {
+        return this.habilidades;
     }
 
-    public void setRequisitos(List<String> requisitos) {
-        this.requisitos = requisitos;
+    public void setHabilidades(List<String> Habilidades) {
+        this.habilidades = habilidades;
     }
 
-    public List<Vaga> getCandidaturas() {
+    public List<Integer> getCandidaturas() {
         return candidaturas;
     }
 
-    public void setCandidaturas(List<Vaga> candidaturas) {
+    public void setCandidaturas(List<Integer> candidaturas) {
         this.candidaturas = candidaturas;
     }
-
-    
 }
