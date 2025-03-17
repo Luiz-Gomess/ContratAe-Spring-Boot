@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.repository.VagaRepositorio;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class VagaService {
     
@@ -18,6 +20,7 @@ public class VagaService {
         return this.vagaRepositorio.findAll();
     }
 
+    @Transactional
     public Vaga salvarVaga(Vaga vaga) {
         return this.vagaRepositorio.save(vaga);
     }
