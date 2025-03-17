@@ -20,24 +20,20 @@ public class Vaga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id ;
+    private Integer id;
 
-    private String titulo ;
-    private String descricao ;
+    private String titulo;
+    private String descricao;
     private double salario;
-    private String empresa ;
-    private String local ;
+    private String empresa;
+    private String local;
 
     @ElementCollection
     private List<String> requisitos;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @JoinTable(
-    name = "candidaturas",
-    joinColumns = @JoinColumn(name = "vaga_id"),
-    inverseJoinColumns = @JoinColumn(name = "candidato_cpf")
-    )
-    private List<Candidato> candidaturas;
+    @ManyToMany
+    @JoinTable(name = "tb_candidato_vaga", joinColumns = @JoinColumn(name = "vaga_id"), inverseJoinColumns = @JoinColumn(name = "candidato_id"))
+    private List<String> candidaturas;
 
     @ManyToOne
     private Recrutador recrutador;
@@ -94,13 +90,12 @@ public class Vaga {
         this.requisitos = requisitos;
     }
 
-    public List<Candidato> getCandidatos() {
+    public List<String> getCandidatos() {
         return candidaturas;
     }
 
-    public void setCandidatos(List<Candidato> candidaturas) {
+    public void setCandidatos(List<String> candidaturas) {
         this.candidaturas = candidaturas;
     }
 
-    
 }
