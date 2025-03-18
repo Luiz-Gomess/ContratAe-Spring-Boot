@@ -2,7 +2,6 @@ package com.securitas.contratae.api.model;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +32,7 @@ public class Vaga {
 
     @ManyToMany
     @JoinTable(name = "tb_candidato_vaga", joinColumns = @JoinColumn(name = "vaga_id"), inverseJoinColumns = @JoinColumn(name = "candidato_id"))
-    private List<String> candidaturas;
+    private List<Candidato> candidaturas;
 
     @ManyToOne
     private Recrutador recrutador;
@@ -90,11 +89,11 @@ public class Vaga {
         this.requisitos = requisitos;
     }
 
-    public List<String> getCandidatos() {
+    public List<Candidato> getCandidatos() {
         return candidaturas;
     }
 
-    public void setCandidatos(List<String> candidaturas) {
+    public void setCandidatos(List<Candidato> candidaturas) {
         this.candidaturas = candidaturas;
     }
 

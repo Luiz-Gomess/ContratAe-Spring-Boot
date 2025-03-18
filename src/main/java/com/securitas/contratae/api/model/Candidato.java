@@ -22,7 +22,7 @@ public class Candidato {
     private List<String> habilidades;
 
     @ManyToMany(mappedBy = "candidaturas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Integer> candidaturas;
+    private List<Vaga> candidaturas;
 
     public String getCpf() {
         return cpf;
@@ -64,11 +64,11 @@ public class Candidato {
         this.habilidades = habilidades;
     }
 
-    public List<Integer> getCandidaturas() {
+    public List<Vaga> getCandidaturas() {
         return candidaturas;
     }
 
-    public void setCandidaturas(List<Integer> candidaturas) {
+    public void setCandidaturas(List<Vaga> candidaturas) {
         this.candidaturas = candidaturas;
     }
 }

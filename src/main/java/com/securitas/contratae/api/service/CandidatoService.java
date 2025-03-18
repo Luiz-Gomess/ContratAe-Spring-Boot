@@ -47,7 +47,7 @@ public class CandidatoService {
     public void candidatar(String cpf, Integer vagaId) {
         Candidato candidato = candidatoRepositorio.findById(cpf).orElse(null); 
         if(candidato != null){
-            candidato.getCandidaturas().add(vagaRepositorio.findById(vagaId).orElse(null).getId());
+            candidato.getCandidaturas().add(vagaRepositorio.findById(vagaId).orElse(null));
             candidatoRepositorio.save(candidato);
         }
     }
