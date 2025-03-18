@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.securitas.contratae.api.model.Candidato;
+import com.securitas.contratae.api.model.Vaga;
+import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
 import com.securitas.contratae.api.repository.CandidatoRepositorio;
 import com.securitas.contratae.api.repository.VagaRepositorio;
 
@@ -20,8 +22,12 @@ public class CandidatoService {
     @Autowired
     private VagaRepositorio vagaRepositorio;
 
-    public List<Candidato> listarCandidatos(){
-        return candidatoRepositorio.findAll();
+    public List<CandidatoListagemDTO> listarCandidatos(){
+        return candidatoRepositorio.findAll().stream().map(CandidatoListagemDTO::new).toList();
+    }
+
+    public List<Vaga> listarCandidaturas(String cpf){
+        return candidatoRepositorio.getCandidaturas(cpf);
     }
 
     @Transactional
@@ -47,8 +53,10 @@ public class CandidatoService {
     public void candidatar(String cpf, Integer vagaId) {
         Candidato candidato = candidatoRepositorio.findById(cpf).orElse(null); 
         if(candidato != null){
-            candidato.getCandidaturas().add(vagaRepositorio.findById(vagaId).orElse(null).getId());
+            candidato.candidatar(vagaRepositorio.findById(vagaId).orElse(null));
             candidatoRepositorio.save(candidato);
         }
     }
+
+    
 }

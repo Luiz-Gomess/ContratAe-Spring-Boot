@@ -4,27 +4,35 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.securitas.contratae.api.model.Vaga;
+import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
+import com.securitas.contratae.api.model.VagaDTOs.VagaListagemDTO;
 import com.securitas.contratae.api.service.VagaService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/vagas")
 public class VagaController {
 
     @Autowired
     private VagaService vagaService;
 
-    @GetMapping("/vagas")
-    public List<Vaga> listarVagas() {
+    @GetMapping
+    public List<VagaListagemDTO> listarVagas() {
         return this.vagaService.listarVagas();
     }
 
-    @PostMapping("/vagas")
+    @GetMapping("/{id}")
+    public VagaDTO buscarVagaPorId(@PathVariable Integer id) {
+        return this.vagaService.buscarVagaPorId(id);
+    }
+
+    @PostMapping
     public Vaga salvarVaga(@RequestBody Vaga vaga) {
         return this.vagaService.salvarVaga(vaga);
     }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.securitas.contratae.api.model.Candidato;
+import com.securitas.contratae.api.model.Vaga;
+import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
 import com.securitas.contratae.api.service.CandidatoService;
 
 @RestController
@@ -24,8 +26,13 @@ public class CandidatoController {
     private CandidatoService candidatoService;
 
     @GetMapping
-    public List<Candidato> listarCandidatos() {
+    public List<CandidatoListagemDTO> listarCandidatos() {
         return this.candidatoService.listarCandidatos();
+    }
+
+    @GetMapping("/candidaturas/{cpf}")
+    public List<Vaga> listarCandidaturas(@PathVariable String cpf){
+        return this.candidatoService.listarCandidaturas(cpf);
     }
 
     @PostMapping
@@ -45,7 +52,7 @@ public class CandidatoController {
     }
 
     @DeleteMapping("/{cpf}")
-    public void deletarCandidato(@RequestBody String cpf) {
+    public void deletarCandidato(@PathVariable String cpf) {
         this.candidatoService.deletarCandidato(cpf);
     }
 

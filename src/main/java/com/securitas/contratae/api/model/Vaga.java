@@ -2,15 +2,14 @@ package com.securitas.contratae.api.model;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -27,16 +26,18 @@ public class Vaga {
     private double salario;
     private String empresa;
     private String local;
+    
+    @ManyToOne
+    private Recrutador recrutador;
 
     @ElementCollection
     private List<String> requisitos;
 
     @ManyToMany
     @JoinTable(name = "tb_candidato_vaga", joinColumns = @JoinColumn(name = "vaga_id"), inverseJoinColumns = @JoinColumn(name = "candidato_id"))
-    private List<String> candidaturas;
+    // @ElementCollection
+    private List<Candidato> candidatos;
 
-    @ManyToOne
-    private Recrutador recrutador;
 
     public Integer getId() {
         return id;
@@ -90,12 +91,29 @@ public class Vaga {
         this.requisitos = requisitos;
     }
 
-    public List<String> getCandidatos() {
-        return candidaturas;
+    public List<Candidato> getCandidatos() {
+        return candidatos;
     }
 
-    public void setCandidatos(List<String> candidaturas) {
-        this.candidaturas = candidaturas;
+    public void setCandidatos(List<Candidato> candidatos) {
+        this.candidatos = candidatos;
     }
 
+    public void candidatar(Candidato c) {
+        this.candidatos.add(c);
+        c.candidatar(this);
+    }
+
+    public void removerCandidatura(Candidato c) {
+        this.candidatos.remove(c);
+        c.removerCandidatura(this);
+    }
+
+    public Recrutador getRecrutador() {
+        return this.recrutador;
+    }
+
+    public void setRecrutador(Recrutador recrutador) {
+        this.recrutador = recrutador;
+    }
 }

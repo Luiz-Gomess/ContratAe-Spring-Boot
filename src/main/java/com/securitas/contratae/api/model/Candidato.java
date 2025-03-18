@@ -3,10 +3,10 @@ package com.securitas.contratae.api.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,8 +21,8 @@ public class Candidato {
     @ElementCollection
     private List<String> habilidades;
 
-    @ManyToMany(mappedBy = "candidaturas", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Integer> candidaturas;
+    @ManyToMany(mappedBy = "candidatos", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Vaga> candidaturas;
 
     public String getCpf() {
         return cpf;
@@ -60,15 +60,23 @@ public class Candidato {
         return this.habilidades;
     }
 
-    public void setHabilidades(List<String> Habilidades) {
+    public void setHabilidades(List<String> habilidades) {
         this.habilidades = habilidades;
     }
 
-    public List<Integer> getCandidaturas() {
+    public List<Vaga> getCandidaturas() {
         return candidaturas;
     }
 
-    public void setCandidaturas(List<Integer> candidaturas) {
+    public void setCandidaturas(List<Vaga> candidaturas) {
         this.candidaturas = candidaturas;
+    }
+
+    public void candidatar(Vaga v) {
+        this.candidaturas.add(v);
+    }
+
+    public void removerCandidatura(Vaga v) {
+        this.candidaturas.remove(v);
     }
 }
