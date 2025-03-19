@@ -1,8 +1,12 @@
 package com.securitas.contratae.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,12 +52,20 @@ public class VagaController {
     }
 
     @PostMapping
-    public Vaga salvarVaga(@RequestBody Vaga vaga) {
-        return this.vagaService.salvarVaga(vaga);
+    public  ResponseEntity<Map<String, ?>> salvarVaga(@RequestBody Vaga vaga) {
+        Vaga v = this.vagaService.salvarVaga(vaga);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of("message", "Vaga salva com sucesso!", "vaga", v));
     }
 
     @PutMapping
     public Vaga atualizarCandidato(@RequestBody Vaga vaga) {
         return this.vagaService.salvarVaga(vaga);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarVaga(@PathVariable Integer id) {
+        this.vagaService.deletarVaga(id);
     }
 }

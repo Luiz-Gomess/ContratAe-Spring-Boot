@@ -33,8 +33,16 @@ public class VagaService {
         return this.vagaRepositorio.save(vaga);
     }
 
+    @Transactional
+    public void deletarVaga(Integer id) {
+        buscarVaga(id);
+        this.vagaRepositorio.delete(this.buscarVaga(id));
+    }
+
     public Vaga buscarVaga(Integer id) {
-        return this.vagaRepositorio.findById(id).orElseThrow(() -> new ResourceNotFoundException("Vaga não encontrada."));
+        return this.vagaRepositorio
+                    .findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Vaga não encontrada."));
     }
 
     public VagaDTO buscarVagaDTO(Integer id) {
@@ -44,14 +52,6 @@ public class VagaService {
 
         return vagaDTO;
     }
-
-    // public List<VagaDTO> buscarVagaPeloTitulo(String titulo){
-    //     return this.vagaRepositorio.findByTituloContaining(titulo).stream().map(VagaDTO::new).toList();
-    // }
-
-    // public List<VagaDTO> buscarVagaPeloSalario(double salario){
-    //     return this.vagaRepositorio.findBySalario(salario).stream().map(VagaDTO::new).toList();
-    // }
 
     public List<VagaDTO> buscarVagaPorFiltro(String titulo, Double salario){
 

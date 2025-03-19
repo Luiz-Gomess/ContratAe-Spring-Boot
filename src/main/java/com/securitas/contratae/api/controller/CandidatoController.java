@@ -30,7 +30,6 @@ public class CandidatoController {
     @PostMapping
     public ResponseEntity<Map<String, ?>> salvarCandidato(@RequestBody Candidato candidato) {
         Candidato c = this.candidatoService.salvarCandidato(candidato);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(Map.of("message", "Candidato salvo com sucesso!", "candidato", c));
