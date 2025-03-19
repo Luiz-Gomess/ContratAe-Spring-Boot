@@ -67,16 +67,25 @@ public class CandidatoService {
         Candidato candidato = this.buscarCandidatoPorCpf(cpf); 
         Vaga vaga = this.vagaService.buscarVaga(vagaId);
 
+        if(candidato.getCandidaturas().contains(vaga)){
+            throw new BusinessException("Candidato já está inscrito nesta vaga.");
+        }
+
         candidato.candidatar(vaga);
         vaga.candidatar(candidato);
 
         candidatoRepositorio.save(candidato);
     }
 
+    
     @Transactional
     public void removerCandidatura(String cpf, Integer vagaId){
         Candidato candidato = this.buscarCandidatoPorCpf(cpf);
         Vaga vaga = this.vagaService.buscarVaga(vagaId);
+
+        if(!candidato.getCandidaturas().contains(vaga)){
+            throw new BusinessException("Candidato não está inscrito nesta vaga");
+        }
 
         candidato.removerCandidatura(vaga);
         vaga.removerCandidatura(candidato);
