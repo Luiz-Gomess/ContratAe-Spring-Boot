@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Vaga;
+import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.VagaRepositorio;
 
@@ -22,6 +23,11 @@ public class VagaService {
         return this.vagaRepositorio.findAll().stream().map(VagaDTO::new).toList();
     }
 
+    public List<CandidatoListagemDTO> listarCandidaturas(Integer id){
+        Vaga vaga = this.buscarVaga(id);
+        return vaga.getCandidatos().stream().map(CandidatoListagemDTO::new).toList();   
+    }
+    
     @Transactional
     public Vaga salvarVaga(Vaga vaga) {
         return this.vagaRepositorio.save(vaga);

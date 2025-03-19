@@ -30,8 +30,8 @@ public class CandidatoService {
     }
 
     public List<VagaDTO> listarCandidaturas(String cpf){
-        buscarCandidatoPorCpf(cpf);
-        return candidatoRepositorio.getCandidaturas(cpf).stream().map(VagaDTO::new).toList();
+        Candidato candidato = buscarCandidatoPorCpf(cpf);
+        return candidato.getCandidaturas().stream().map(VagaDTO::new).toList();
     }
 
     @Transactional
