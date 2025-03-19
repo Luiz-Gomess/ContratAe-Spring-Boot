@@ -45,6 +45,11 @@ public class CandidatoService {
         return candidatoRepositorio.findById(cpf).orElseThrow(() -> new ResourceNotFoundException("Candidato não encontrado"));
     }
 
+    public CandidatoListagemDTO buscarCandidatoDTO(String cpf){
+        Candidato candidato = buscarCandidatoPorCpf(cpf);
+        return new CandidatoListagemDTO(candidato);
+    }
+
 
     @Transactional
     public void deletarCandidato(String cpf){

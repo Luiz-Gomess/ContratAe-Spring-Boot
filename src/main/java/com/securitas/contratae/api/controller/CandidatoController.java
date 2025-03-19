@@ -41,8 +41,8 @@ public class CandidatoController {
     }
 
     @GetMapping("/{cpf}")
-    public Candidato buscarCandidatoPorCpf(@PathVariable String cpf) {
-        return this.candidatoService.buscarCandidatoPorCpf(cpf);
+    public CandidatoListagemDTO buscarCandidatoPorCpf(@PathVariable String cpf) {
+        return this.candidatoService.buscarCandidatoDTO(cpf);
         
     }
 

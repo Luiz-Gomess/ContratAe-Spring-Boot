@@ -27,7 +27,7 @@ public class VagaService {
         Vaga vaga = this.buscarVaga(id);
         return vaga.getCandidatos().stream().map(CandidatoListagemDTO::new).toList();   
     }
-    
+
     @Transactional
     public Vaga salvarVaga(Vaga vaga) {
         return this.vagaRepositorio.save(vaga);
@@ -43,6 +43,10 @@ public class VagaService {
         VagaDTO vagaDTO = new VagaDTO(vaga);
 
         return vagaDTO;
+    }
+
+    public List<VagaDTO> buscarVagaPeloTitulo(String titulo){
+        return this.vagaRepositorio.findByTituloContaining(titulo).stream().map(VagaDTO::new).toList();
     }
 
 
