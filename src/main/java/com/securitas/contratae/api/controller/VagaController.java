@@ -39,9 +39,14 @@ public class VagaController {
     }
 
     @GetMapping("/buscar")
-    public List<VagaDTO> buscarVagaPeloTitulo(@RequestParam String titulo){
-        return this.vagaService.buscarVagaPeloTitulo(titulo);
+    public List<VagaDTO> buscarVagaPorFiltro(
+        @RequestParam (required = false) String titulo, 
+        @RequestParam (required = false) String salario){
+
+        return this.vagaService.buscarVagaPorFiltro(titulo, salario);
     }
+
+
 
     @PostMapping
     public Vaga salvarVaga(@RequestBody Vaga vaga) {
