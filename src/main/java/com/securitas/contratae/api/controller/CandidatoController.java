@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.securitas.contratae.api.model.Candidato;
-import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
+import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.service.CandidatoService;
 
 @RestController
@@ -25,25 +25,25 @@ public class CandidatoController {
     @Autowired
     private CandidatoService candidatoService;
 
+    @PostMapping
+    public Candidato salvarCandidato(@RequestBody Candidato candidato) {
+        return this.candidatoService.salvarCandidato(candidato);
+    }
+
     @GetMapping
     public List<CandidatoListagemDTO> listarCandidatos() {
         return this.candidatoService.listarCandidatos();
     }
 
     @GetMapping("/candidaturas/{cpf}")
-    public List<Vaga> listarCandidaturas(@PathVariable String cpf){
+    public List<VagaDTO> listarCandidaturas(@PathVariable String cpf){
         return this.candidatoService.listarCandidaturas(cpf);
-    }
-
-    @PostMapping
-    public Candidato salvarCandidato(@RequestBody Candidato candidato) {
-        return this.candidatoService.salvarCandidato(candidato);
     }
 
     @GetMapping("/{cpf}")
     public Candidato buscarCandidatoPorCpf(@PathVariable String cpf) {
-        System.out.println(cpf);
         return this.candidatoService.buscarCandidatoPorCpf(cpf);
+        
     }
 
     @PutMapping("/{cpf}")
@@ -51,14 +51,21 @@ public class CandidatoController {
         return this.candidatoService.atualizarCandidato(candidato);
     }
 
+    @PutMapping("/{cpf}/candidatar/{vagaId}")
+    public ResponseEntity<String> candidatar(@PathVariable String cpf, @PathVariable Integer vagaId) {
+        candidatoService.candidatar(cpf, vagaId);
+        return ResponseEntity.ok("Candidatura realizada com sucesso!");
+    }
+
+    @PutMapping("/{cpf}/removercandidatura/{vagaId}")
+    public ResponseEntity<String> removerCandidatura(@PathVariable String cpf, @PathVariable Integer vagaId) {
+        candidatoService.removerCandidatura(cpf, vagaId);
+        return ResponseEntity.ok("Candidatura removida com sucesso!");
+    }
+
     @DeleteMapping("/{cpf}")
     public void deletarCandidato(@PathVariable String cpf) {
         this.candidatoService.deletarCandidato(cpf);
     }
 
-    @PostMapping("/{cpf}/candidatar/{vagaId}")
-    public ResponseEntity<String> candidatar(@PathVariable String cpf, @PathVariable Integer vagaId) {
-        candidatoService.candidatar(cpf, vagaId);
-        return ResponseEntity.ok("Candidatura realizada com sucesso!");
-    }
 }

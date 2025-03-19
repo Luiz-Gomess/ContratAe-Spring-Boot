@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaListagemDTO;
 import com.securitas.contratae.api.service.VagaService;
 
 @RestController
@@ -23,13 +22,13 @@ public class VagaController {
     private VagaService vagaService;
 
     @GetMapping
-    public List<VagaListagemDTO> listarVagas() {
+    public List<VagaDTO> listarVagas() {
         return this.vagaService.listarVagas();
     }
 
     @GetMapping("/{id}")
     public VagaDTO buscarVagaPorId(@PathVariable Integer id) {
-        return this.vagaService.buscarVagaPorId(id);
+        return this.vagaService.buscarVagaDTO(id);
     }
 
     @PostMapping

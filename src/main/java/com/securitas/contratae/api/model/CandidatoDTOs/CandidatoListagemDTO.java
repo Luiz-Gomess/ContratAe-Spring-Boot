@@ -7,6 +7,11 @@ import com.securitas.contratae.api.model.Candidato;
 public record CandidatoListagemDTO(String cpf, String nome, String email, List<String> habilidades ) {
 
     public CandidatoListagemDTO( Candidato candidato){
-        this(candidato.getCpf(), candidato.getNome(), candidato.getEmail(), candidato.getHabilidades());
+        this(
+            candidato.getCpf(), 
+            candidato.getNome(), 
+            candidato.getEmail(), 
+            candidato.getHabilidades()
+            );
     }
 }

@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.securitas.contratae.api.exception.BusinessException;
+import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Candidato;
 import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
+import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.CandidatoRepositorio;
-import com.securitas.contratae.api.repository.VagaRepositorio;
 
 import jakarta.transaction.Transactional;
 
@@ -20,14 +22,16 @@ public class CandidatoService {
     private CandidatoRepositorio candidatoRepositorio;
 
     @Autowired
-    private VagaRepositorio vagaRepositorio;
+    private VagaService vagaService;
+
 
     public List<CandidatoListagemDTO> listarCandidatos(){
         return candidatoRepositorio.findAll().stream().map(CandidatoListagemDTO::new).toList();
     }
 
-    public List<Vaga> listarCandidaturas(String cpf){
-        return candidatoRepositorio.getCandidaturas(cpf);
+    public List<VagaDTO> listarCandidaturas(String cpf){
+        buscarCandidatoPorCpf(cpf);
+        return candidatoRepositorio.getCandidaturas(cpf).stream().map(VagaDTO::new).toList();
     }
 
     @Transactional
@@ -35,13 +39,17 @@ public class CandidatoService {
         return candidatoRepositorio.save(candidato);
     }
 
-    public Candidato buscarCandidatoPorCpf(String cpf){
-        return candidatoRepositorio.findById(cpf).orElse(null); 
+
+    public Candidato buscarCandidatoPorCpf(String cpf){ 
+        validarCPF(cpf);
+        return candidatoRepositorio.findById(cpf).orElseThrow(() -> new ResourceNotFoundException("Candidato não encontrado"));
     }
+
 
     @Transactional
     public void deletarCandidato(String cpf){
-        candidatoRepositorio.deleteById(cpf);
+        buscarCandidatoPorCpf(cpf);
+        this.candidatoRepositorio.deleteById(cpf);
     }
 
     @Transactional
@@ -51,12 +59,35 @@ public class CandidatoService {
 
     @Transactional
     public void candidatar(String cpf, Integer vagaId) {
-        Candidato candidato = candidatoRepositorio.findById(cpf).orElse(null); 
-        if(candidato != null){
-            candidato.candidatar(vagaRepositorio.findById(vagaId).orElse(null));
-            candidatoRepositorio.save(candidato);
-        }
+        Candidato candidato = this.buscarCandidatoPorCpf(cpf); 
+        Vaga vaga = this.vagaService.buscarVaga(vagaId);
+
+        candidato.candidatar(vaga);
+        vaga.candidatar(candidato);
+
+        candidatoRepositorio.save(candidato);
     }
+
+    @Transactional
+    public void removerCandidatura(String cpf, Integer vagaId){
+        Candidato candidato = this.buscarCandidatoPorCpf(cpf);
+        Vaga vaga = this.vagaService.buscarVaga(vagaId);
+
+        candidato.removerCandidatura(vaga);
+        vaga.removerCandidatura(candidato);
+
+        candidatoRepositorio.save(candidato);
+    }
+
+
+    private boolean validarCPF(String cpf){
+		if(!cpf.matches("\\d+")){
+			throw new BusinessException("CPF deve conter apenas números");
+		}
+		else{
+			return true;
+		}
+	}
 
     
 }

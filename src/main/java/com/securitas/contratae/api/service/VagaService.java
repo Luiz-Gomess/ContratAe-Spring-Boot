@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaListagemDTO;
 import com.securitas.contratae.api.repository.VagaRepositorio;
 
 import jakarta.transaction.Transactional;
@@ -18,8 +18,8 @@ public class VagaService {
     @Autowired
     private VagaRepositorio vagaRepositorio;
 
-    public List<VagaListagemDTO >listarVagas() {
-        return this.vagaRepositorio.findAll().stream().map(VagaListagemDTO::new).toList();
+    public List<VagaDTO >listarVagas() {
+        return this.vagaRepositorio.findAll().stream().map(VagaDTO::new).toList();
     }
 
     @Transactional
@@ -27,13 +27,19 @@ public class VagaService {
         return this.vagaRepositorio.save(vaga);
     }
 
-    public VagaDTO buscarVagaPorId(Integer id) {
+    public Vaga buscarVaga(Integer id) {
+        return this.vagaRepositorio.findById(id).orElseThrow(() -> new ResourceNotFoundException("Vaga não encontrada."));
+    }
 
-        Vaga vaga = this.vagaRepositorio.findById(id).orElse(null);
+    public VagaDTO buscarVagaDTO(Integer id) {
+
+        Vaga vaga = this.buscarVaga(id);
         VagaDTO vagaDTO = new VagaDTO(vaga);
 
         return vagaDTO;
     }
+
+
 
     
 }
