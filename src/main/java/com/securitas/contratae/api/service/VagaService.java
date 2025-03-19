@@ -53,8 +53,13 @@ public class VagaService {
     //     return this.vagaRepositorio.findBySalario(salario).stream().map(VagaDTO::new).toList();
     // }
 
-    public List<VagaDTO> buscarVagaPorFiltro(String titulo, String salario){
-        return this.vagaRepositorio.findByFilter(Double.parseDouble(salario), titulo).stream().map(VagaDTO::new).toList();
+    public List<VagaDTO> buscarVagaPorFiltro(String titulo, Double salario){
+
+        Double sal = salario == null ? 0 : salario;
+        return this.vagaRepositorio.
+        findByFilter(sal, titulo)
+        .stream()
+        .map(VagaDTO::new).toList();
     }
 
 
