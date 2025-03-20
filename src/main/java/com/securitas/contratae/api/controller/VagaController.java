@@ -28,21 +28,25 @@ public class VagaController {
     @Autowired
     private VagaService vagaService;
 
+    //ok
     @GetMapping
     public List<VagaDTO> listarVagas() {
         return this.vagaService.listarVagas();
     }
 
+    //ok
     @GetMapping("/{id}/candidaturas")
     public List<CandidatoListagemDTO> listarCandidaturas(@PathVariable Integer id){
         return this.vagaService.listarCandidaturas(id);
     }
 
+    //ok
     @GetMapping("/{id}")
     public VagaDTO buscarVagaPorId(@PathVariable Integer id) {
         return this.vagaService.buscarVagaDTO(id);
     }
 
+    //ok
     @GetMapping("/buscar")
     public List<VagaDTO> buscarVagaPorFiltro(
         @RequestParam (required = false) String titulo, 
@@ -51,6 +55,7 @@ public class VagaController {
         return this.vagaService.buscarVagaPorFiltro(titulo, salario);
     }
 
+    //ok
     @PostMapping
     public  ResponseEntity<Map<String, ?>> salvarVaga(@RequestBody Vaga vaga) {
         Vaga v = this.vagaService.salvarVaga(vaga);
@@ -59,13 +64,18 @@ public class VagaController {
                 .body(Map.of("message", "Vaga salva com sucesso!", "vaga", v));
     }
 
+    //ok
     @PutMapping
-    public Vaga atualizarCandidato(@RequestBody Vaga vaga) {
+    public Vaga atualizarVaga(@RequestBody Vaga vaga) {
         return this.vagaService.salvarVaga(vaga);
     }
 
+    //ok
     @DeleteMapping("/{id}")
-    public void deletarVaga(@PathVariable Integer id) {
+    public ResponseEntity<Map<String, String>> deletarVaga(@PathVariable Integer id) {
         this.vagaService.deletarVaga(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(Map.of("message", "Vaga deletada com sucesso!"));
     }
 }

@@ -27,31 +27,37 @@ public class RecrutadorController {
     @Autowired
     private RecrutadorService recrutadorService;
 
+    //ok
     @GetMapping
     public List<RecrutadorListagemDTO> listarRecrutadores(){
         return this.recrutadorService.listarRecrutadores();
     }
 
+    //ok
     @GetMapping("/{cpf}")
     public RecrutadorListagemDTO buscarRecrutadorPorCpf(@PathVariable String cpf) {
         return this.recrutadorService.buscarRecrutadorDTO(cpf);
     }
 
+    //ok
     @GetMapping("/{cpf}/vagas")
     public List<VagaDTO> listarVagasGerenciadas(@PathVariable String cpf){
         return this.recrutadorService.listarVagasGerenciadas(cpf);
     }
 
+    //ok
     @PostMapping
     public Recrutador salvarRecrutador(@RequestBody Recrutador recrutador){
         return this.recrutadorService.salvarRecrutador(recrutador);
     }
 
-    @PutMapping("/{cpf}")
+    //ok
+    @PutMapping
     public Recrutador atualizarRecrutador(@RequestBody Recrutador recrutador){
         return this.recrutadorService.salvarRecrutador(recrutador);
     }
 
+    //ok
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Map<String, String>> deletarRecrutador(@PathVariable String cpf){
         this.recrutadorService.deletarRecrutador(cpf);

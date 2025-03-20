@@ -27,6 +27,7 @@ public class CandidatoController {
     @Autowired
     private CandidatoService candidatoService;
 
+    //ok
     @PostMapping
     public ResponseEntity<Map<String, ?>> salvarCandidato(@RequestBody Candidato candidato) {
         Candidato c = this.candidatoService.salvarCandidato(candidato);
@@ -35,27 +36,32 @@ public class CandidatoController {
                 .body(Map.of("message", "Candidato salvo com sucesso!", "candidato", c));
     }
 
+    //ok
     @GetMapping
     public List<CandidatoListagemDTO> listarCandidatos() {
         return this.candidatoService.listarCandidatos();
     }
 
+    //ok
     @GetMapping("/candidaturas/{cpf}")
     public List<VagaDTO> listarCandidaturas(@PathVariable String cpf){
         return this.candidatoService.listarCandidaturas(cpf);
     }
 
+    //ok
     @GetMapping("/{cpf}")
     public CandidatoListagemDTO buscarCandidatoPorCpf(@PathVariable String cpf) {
         return this.candidatoService.buscarCandidatoDTO(cpf);
         
     }
 
-    @PutMapping("/{cpf}")
+    //ok
+    @PutMapping
     public Candidato atualizarCandidato(@RequestBody Candidato candidato) {
         return this.candidatoService.atualizarCandidato(candidato);
     }
 
+    //ok
     @PutMapping("/{cpf}/candidatar/{vagaId}")
     public ResponseEntity<Map<String, String>> candidatar(@PathVariable String cpf, @PathVariable Integer vagaId) {
         candidatoService.candidatar(cpf, vagaId);
@@ -64,6 +70,7 @@ public class CandidatoController {
                 .body(Map.of("message", "Candidatura realizada com sucesso!"));
     }
 
+    //ok
     @PutMapping("/{cpf}/removercandidatura/{vagaId}")
     public ResponseEntity<Map<String, String>> removerCandidatura(@PathVariable String cpf, @PathVariable Integer vagaId) {
         candidatoService.removerCandidatura(cpf, vagaId);
@@ -72,6 +79,7 @@ public class CandidatoController {
                 .body(Map.of("message", "Candidatura removida com sucesso!"));
     }
 
+    //ok
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Map<String, String>> deletarCandidato(@PathVariable String cpf) {
         this.candidatoService.deletarCandidato(cpf);
