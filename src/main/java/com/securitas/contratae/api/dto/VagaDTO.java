@@ -1,4 +1,4 @@
-package com.securitas.contratae.api.model.VagaDTOs;
+package com.securitas.contratae.api.dto;
 
 import com.securitas.contratae.api.model.Vaga;
 

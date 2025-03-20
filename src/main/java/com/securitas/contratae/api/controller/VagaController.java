@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.securitas.contratae.api.dto.CandidatoDTO;
+import com.securitas.contratae.api.dto.VagaDTO;
 import com.securitas.contratae.api.model.Vaga;
-import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.service.VagaService;
 
 @RestController
@@ -34,10 +34,19 @@ public class VagaController {
         return this.vagaService.listarVagas();
     }
 
-    //ok
+    // //ok
+    // @GetMapping("/{id}/candidaturas")
+    // public List<CandidatoDTO> listarCandidaturas(@PathVariable Integer id){
+    //     return this.vagaService.listarCandidaturas(id);
+    // }
+
     @GetMapping("/{id}/candidaturas")
-    public List<CandidatoListagemDTO> listarCandidaturas(@PathVariable Integer id){
-        return this.vagaService.listarCandidaturas(id);
+    public ResponseEntity<List<CandidatoDTO>> listarCandidaturas(@PathVariable Integer id){
+        List<CandidatoDTO> candidatos = this.vagaService.listarCandidaturas(id);
+        HttpStatus status = candidatos.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return ResponseEntity
+                .status(status)
+                .body(candidatos);
     }
 
     //ok

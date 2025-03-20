@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.securitas.contratae.api.dto.RecrutadorDTO;
+import com.securitas.contratae.api.dto.VagaDTO;
 import com.securitas.contratae.api.model.Recrutador;
-import com.securitas.contratae.api.model.RecrutadorDTOs.RecrutadorListagemDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.service.RecrutadorService;
 
 @RestController
@@ -29,20 +29,29 @@ public class RecrutadorController {
 
     //ok
     @GetMapping
-    public List<RecrutadorListagemDTO> listarRecrutadores(){
+    public List<RecrutadorDTO> listarRecrutadores(){
         return this.recrutadorService.listarRecrutadores();
     }
 
     //ok
     @GetMapping("/{cpf}")
-    public RecrutadorListagemDTO buscarRecrutadorPorCpf(@PathVariable String cpf) {
+    public RecrutadorDTO buscarRecrutadorPorCpf(@PathVariable String cpf) {
         return this.recrutadorService.buscarRecrutadorDTO(cpf);
     }
 
-    //ok
+    // //ok
+    // @GetMapping("/{cpf}/vagas")
+    // public List<VagaDTO> listarVagasGerenciadas(@PathVariable String cpf){
+    //     return this.recrutadorService.listarVagasGerenciadas(cpf);
+    // }
+
     @GetMapping("/{cpf}/vagas")
-    public List<VagaDTO> listarVagasGerenciadas(@PathVariable String cpf){
-        return this.recrutadorService.listarVagasGerenciadas(cpf);
+    public ResponseEntity<List<VagaDTO>> listarVagasGerenciadas(@PathVariable String cpf){
+        List<VagaDTO> vagas = this.recrutadorService.listarVagasGerenciadas(cpf);
+        HttpStatus status = vagas.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return ResponseEntity
+                .status(status)
+                .body(vagas);
     }
 
     //ok

@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.securitas.contratae.api.dto.CandidatoDTO;
+import com.securitas.contratae.api.dto.VagaDTO;
 import com.securitas.contratae.api.exception.BusinessException;
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Candidato;
 import com.securitas.contratae.api.model.Vaga;
-import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.CandidatoRepositorio;
 
 import jakarta.transaction.Transactional;
@@ -25,8 +25,8 @@ public class CandidatoService {
     private VagaService vagaService;
 
 
-    public List<CandidatoListagemDTO> listarCandidatos(){
-        return candidatoRepositorio.findAll().stream().map(CandidatoListagemDTO::new).toList();
+    public List<CandidatoDTO> listarCandidatos(){
+        return candidatoRepositorio.findAll().stream().map(CandidatoDTO::new).toList();
     }
 
     public List<VagaDTO> listarCandidaturas(String cpf){
@@ -36,7 +36,13 @@ public class CandidatoService {
 
     @Transactional
     public Candidato salvarCandidato(Candidato candidato){
-        return candidatoRepositorio.save(candidato);
+        try{
+            buscarCandidatoPorCpf(candidato.getCpf());
+            throw new BusinessException("Candidato já cadastrado");
+            
+        } catch (ResourceNotFoundException e){
+            return candidatoRepositorio.save(candidato);
+        }
     }
 
 
@@ -45,9 +51,9 @@ public class CandidatoService {
         return candidatoRepositorio.findById(cpf).orElseThrow(() -> new ResourceNotFoundException("Candidato não encontrado"));
     }
 
-    public CandidatoListagemDTO buscarCandidatoDTO(String cpf){
+    public CandidatoDTO buscarCandidatoDTO(String cpf){
         Candidato candidato = buscarCandidatoPorCpf(cpf);
-        return new CandidatoListagemDTO(candidato);
+        return new CandidatoDTO(candidato);
     }
 
 

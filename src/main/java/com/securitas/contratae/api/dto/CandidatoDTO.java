@@ -1,12 +1,12 @@
-package com.securitas.contratae.api.model.CandidatoDTOs;
+package com.securitas.contratae.api.dto;
 
 import java.util.List;
 
 import com.securitas.contratae.api.model.Candidato;
 
-public record CandidatoListagemDTO(String cpf, String nome, String email, List<String> habilidades ) {
+public record CandidatoDTO(String cpf, String nome, String email, List<String> habilidades ) {
 
-    public CandidatoListagemDTO( Candidato candidato){
+    public CandidatoDTO( Candidato candidato){
         this(
             candidato.getCpf(), 
             candidato.getNome(), 

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.securitas.contratae.api.dto.CandidatoDTO;
+import com.securitas.contratae.api.dto.VagaDTO;
 import com.securitas.contratae.api.model.Candidato;
-import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.service.CandidatoService;
 
 @RestController
@@ -38,21 +38,29 @@ public class CandidatoController {
 
     //ok
     @GetMapping
-    public List<CandidatoListagemDTO> listarCandidatos() {
+    public List<CandidatoDTO> listarCandidatos() {
         return this.candidatoService.listarCandidatos();
     }
 
     //ok
+    // @GetMapping("/candidaturas/{cpf}")
+    // public List<VagaDTO> listarCandidaturas(@PathVariable String cpf){
+    //     return this.candidatoService.listarCandidaturas(cpf);
+    // }
+
     @GetMapping("/candidaturas/{cpf}")
-    public List<VagaDTO> listarCandidaturas(@PathVariable String cpf){
-        return this.candidatoService.listarCandidaturas(cpf);
+    public ResponseEntity<List<VagaDTO>> listarCandidaturas(@PathVariable String cpf){
+        List<VagaDTO> candidaturas = this.candidatoService.listarCandidaturas(cpf);
+        HttpStatus status = candidaturas.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return ResponseEntity
+                .status(status)
+                .body(candidaturas);
     }
 
     //ok
     @GetMapping("/{cpf}")
-    public CandidatoListagemDTO buscarCandidatoPorCpf(@PathVariable String cpf) {
+    public CandidatoDTO buscarCandidatoPorCpf(@PathVariable String cpf) {
         return this.candidatoService.buscarCandidatoDTO(cpf);
-        
     }
 
     //ok

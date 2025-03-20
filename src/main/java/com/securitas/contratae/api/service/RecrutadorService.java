@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.securitas.contratae.api.dto.RecrutadorDTO;
+import com.securitas.contratae.api.dto.VagaDTO;
 import com.securitas.contratae.api.exception.BusinessException;
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Recrutador;
-import com.securitas.contratae.api.model.RecrutadorDTOs.RecrutadorListagemDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.RecrutadorRepositorio;
 
 import jakarta.transaction.Transactional;
@@ -20,8 +20,8 @@ public class RecrutadorService {
     @Autowired
     private RecrutadorRepositorio recrutadorRepositorio;
 
-    public List<RecrutadorListagemDTO> listarRecrutadores(){
-        return recrutadorRepositorio.findAll().stream().map(RecrutadorListagemDTO::new).toList();
+    public List<RecrutadorDTO> listarRecrutadores(){
+        return recrutadorRepositorio.findAll().stream().map(RecrutadorDTO::new).toList();
     }
 
     public List<VagaDTO> listarVagasGerenciadas(String cpf){
@@ -29,9 +29,9 @@ public class RecrutadorService {
         return recrutador.getVagasGerenciadas().stream().map(VagaDTO::new).toList();
     }
     
-    public RecrutadorListagemDTO buscarRecrutadorDTO(String cpf){
+    public RecrutadorDTO buscarRecrutadorDTO(String cpf){
         Recrutador recrutador = this.buscarRecrutador(cpf);
-        RecrutadorListagemDTO recrutadorDTO = new RecrutadorListagemDTO(recrutador);
+        RecrutadorDTO recrutadorDTO = new RecrutadorDTO(recrutador);
         
         return recrutadorDTO;
     }

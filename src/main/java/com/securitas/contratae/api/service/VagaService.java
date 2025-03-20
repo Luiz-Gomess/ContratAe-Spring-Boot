@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.securitas.contratae.api.dto.CandidatoDTO;
+import com.securitas.contratae.api.dto.VagaDTO;
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Vaga;
-import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
-import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.VagaRepositorio;
 
 import jakarta.transaction.Transactional;
@@ -23,9 +23,9 @@ public class VagaService {
         return this.vagaRepositorio.findAll().stream().map(VagaDTO::new).toList();
     }
 
-    public List<CandidatoListagemDTO> listarCandidaturas(Integer id){
+    public List<CandidatoDTO> listarCandidaturas(Integer id){
         Vaga vaga = this.buscarVaga(id);
-        return vaga.getCandidatos().stream().map(CandidatoListagemDTO::new).toList();   
+        return vaga.getCandidatos().stream().map(CandidatoDTO::new).toList();   
     }
 
     @Transactional
