@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.securitas.contratae.api.exception.BusinessException;
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Candidato;
-import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
+import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.CandidatoRepositorio;
 
@@ -24,7 +24,6 @@ public class CandidatoService {
     @Autowired
     private VagaService vagaService;
 
-
     public List<CandidatoListagemDTO> listarCandidatos(){
         return candidatoRepositorio.findAll().stream().map(CandidatoListagemDTO::new).toList();
     }
@@ -38,7 +37,6 @@ public class CandidatoService {
     public Candidato salvarCandidato(Candidato candidato){
         return candidatoRepositorio.save(candidato);
     }
-
 
     public Candidato buscarCandidatoPorCpf(String cpf){ 
         validarCPF(cpf);
@@ -59,6 +57,7 @@ public class CandidatoService {
 
     @Transactional
     public Candidato atualizarCandidato(Candidato candidato){
+        System.out.println(candidato);
         return candidatoRepositorio.save(candidato);
     }
 
@@ -102,6 +101,4 @@ public class CandidatoService {
 			return true;
 		}
 	}
-
-    
 }

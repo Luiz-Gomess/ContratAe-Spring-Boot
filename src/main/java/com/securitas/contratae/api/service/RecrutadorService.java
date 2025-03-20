@@ -21,11 +21,14 @@ public class RecrutadorService {
     }
 
     public RecrutadorDTO buscarRecrutadorPorCpf(String cpf){
-
         Recrutador recrutador = recrutadorRepositorio.findById(cpf).orElse(null);
         RecrutadorDTO recrutadorDTO = new RecrutadorDTO(recrutador);
         
         return recrutadorDTO;
+    }
+
+    public Recrutador buscarRecrutador(String cpf){
+        return recrutadorRepositorio.findById(cpf).orElse(null);
     }
 
     public Recrutador salvarRecrutador(Recrutador recrutador){

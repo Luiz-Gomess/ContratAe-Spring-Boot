@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
+import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.service.VagaService;
 
@@ -46,10 +46,8 @@ public class VagaController {
         return this.vagaService.buscarVagaPorFiltro(titulo, salario);
     }
 
-
-
-    @PostMapping
-    public Vaga salvarVaga(@RequestBody Vaga vaga) {
-        return this.vagaService.salvarVaga(vaga);
+    @PostMapping("/{recrutadorCpf}")
+    public Vaga salvarVaga(@RequestBody Vaga vaga, @PathVariable String recrutadorCpf) {
+        return this.vagaService.salvarVaga(vaga, recrutadorCpf);
     }
 }

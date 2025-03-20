@@ -3,10 +3,12 @@ package com.securitas.contratae.api.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +19,10 @@ public class Candidato {
     private String nome;
     private String email;
     private String senha;
+    
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String resumo;
 
     @ElementCollection
     private List<String> habilidades;
@@ -78,5 +84,13 @@ public class Candidato {
 
     public void removerCandidatura(Vaga v) {
         this.candidaturas.remove(v);
+    }
+
+    public String getResumo() {
+        return resumo;
+    }
+
+    public void setResumo(String resumo) {
+        this.resumo = resumo;
     }
 }

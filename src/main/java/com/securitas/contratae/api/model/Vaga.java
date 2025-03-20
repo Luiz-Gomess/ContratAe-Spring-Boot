@@ -2,14 +2,14 @@ package com.securitas.contratae.api.model;
 
 import java.util.List;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -35,9 +35,7 @@ public class Vaga {
 
     @ManyToMany
     @JoinTable(name = "tb_candidato_vaga", joinColumns = @JoinColumn(name = "vaga_id"), inverseJoinColumns = @JoinColumn(name = "candidato_id"))
-    // @ElementCollection
     private List<Candidato> candidatos;
-
 
     public Integer getId() {
         return id;
