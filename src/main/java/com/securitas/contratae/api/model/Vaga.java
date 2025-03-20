@@ -2,6 +2,7 @@ package com.securitas.contratae.api.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,10 @@ public class Vaga {
     private Integer id;
 
     private String titulo;
+
+    @Column(columnDefinition = "TEXT")
     private String descricao;
+    
     private double salario;
     private String empresa;
     private String local;

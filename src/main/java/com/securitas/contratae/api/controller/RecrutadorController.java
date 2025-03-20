@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.securitas.contratae.api.model.Recrutador;
+import com.securitas.contratae.api.model.RecrutadorDTOs.RecrutadorDTO;
 import com.securitas.contratae.api.model.RecrutadorDTOs.RecrutadorListagemDTO;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.service.RecrutadorService;
@@ -35,7 +36,7 @@ public class RecrutadorController {
 
     //ok
     @GetMapping("/{cpf}")
-    public RecrutadorListagemDTO buscarRecrutadorPorCpf(@PathVariable String cpf) {
+    public RecrutadorDTO buscarRecrutadorPorCpf(@PathVariable String cpf) {
         return this.recrutadorService.buscarRecrutadorDTO(cpf);
     }
 

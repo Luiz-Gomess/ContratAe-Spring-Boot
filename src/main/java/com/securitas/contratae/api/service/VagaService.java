@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
+import com.securitas.contratae.api.model.Candidato;
 import com.securitas.contratae.api.model.CandidatoDTOs.CandidatoListagemDTO;
 import com.securitas.contratae.api.model.Vaga;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
@@ -31,9 +32,15 @@ public class VagaService {
         return vaga.getCandidatos().stream().map(CandidatoListagemDTO::new).toList();   
     }
 
+    public List<Candidato> listarCandidaturasWithoutDTO(Integer id){
+        Vaga vaga = this.buscarVaga(id);
+        return vaga.getCandidatos();   
+    }
+
     @Transactional
     public Vaga salvarVaga(Vaga vaga, String recrutadorCpf) {
         vaga.setRecrutador(recrutadorService.buscarRecrutador(recrutadorCpf));
+        vaga.setCandidatos(this.listarCandidaturasWithoutDTO(vaga.getId()));
         return this.vagaRepositorio.save(vaga);
     }
 

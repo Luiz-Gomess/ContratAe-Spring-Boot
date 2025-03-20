@@ -62,16 +62,16 @@ public class CandidatoController {
 
     //ok
     @PutMapping("/{cpf}/candidatar/{vagaId}")
-    public ResponseEntity<String> candidatar(@PathVariable String cpf, @PathVariable Integer vagaId) {
+    public ResponseEntity<Map<String, ?>> candidatar(@PathVariable String cpf, @PathVariable Integer vagaId) {
         candidatoService.candidatar(cpf, vagaId);
-        return ResponseEntity.ok("Candidatura realizada com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Candidatura realizada com sucesso"));
     }
 
     //ok
     @PutMapping("/{cpf}/removercandidatura/{vagaId}")
-    public ResponseEntity<String> removerCandidatura(@PathVariable String cpf, @PathVariable Integer vagaId) {
+    public ResponseEntity<Map<String, ?>> removerCandidatura(@PathVariable String cpf, @PathVariable Integer vagaId) {
         candidatoService.removerCandidatura(cpf, vagaId);
-        return ResponseEntity.ok("Candidatura removida com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Candidatura removida com sucesso"));
     }
 
     //ok

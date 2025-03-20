@@ -56,12 +56,13 @@ public class VagaController {
     }
 
     //ok
-    @PostMapping
-    public  ResponseEntity<Map<String, ?>> salvarVaga(@RequestBody Vaga vaga, @PathVariable String recrutadorCpf) {
+    @PostMapping("/{recrutadorCpf}")
+    public ResponseEntity<Map<String,?>> salvarVaga(@RequestBody Vaga vaga, @PathVariable String recrutadorCpf) {
         Vaga v = this.vagaService.salvarVaga(vaga, recrutadorCpf);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(Map.of("message", "Vaga salva com sucesso!", "vaga", v));
+                .body(Map.of("message", "Vaga salva com sucesso!", "vaga", new VagaDTO(v)));
     }
 
     //ok

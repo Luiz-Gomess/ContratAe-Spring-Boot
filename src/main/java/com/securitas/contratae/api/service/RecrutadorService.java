@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.securitas.contratae.api.exception.BusinessException;
 import com.securitas.contratae.api.exception.ResourceNotFoundException;
 import com.securitas.contratae.api.model.Recrutador;
+import com.securitas.contratae.api.model.RecrutadorDTOs.RecrutadorDTO;
 import com.securitas.contratae.api.model.RecrutadorDTOs.RecrutadorListagemDTO;
 import com.securitas.contratae.api.model.VagaDTOs.VagaDTO;
 import com.securitas.contratae.api.repository.RecrutadorRepositorio;
@@ -29,9 +30,9 @@ public class RecrutadorService {
         return recrutador.getVagasGerenciadas().stream().map(VagaDTO::new).toList();
     }
     
-    public RecrutadorListagemDTO buscarRecrutadorDTO(String cpf){
+    public RecrutadorDTO buscarRecrutadorDTO(String cpf){
         Recrutador recrutador = this.buscarRecrutador(cpf);
-        RecrutadorListagemDTO recrutadorDTO = new RecrutadorListagemDTO(recrutador);
+        RecrutadorDTO recrutadorDTO = new RecrutadorDTO(recrutador);
         
         return recrutadorDTO;
     }
