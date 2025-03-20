@@ -7,7 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -20,7 +19,6 @@ public class Candidato {
     private String email;
     private String senha;
     
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String resumo;
 

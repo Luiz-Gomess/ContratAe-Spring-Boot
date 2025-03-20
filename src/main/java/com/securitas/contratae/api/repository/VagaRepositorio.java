@@ -13,4 +13,5 @@ public interface VagaRepositorio extends JpaRepository<Vaga, Integer> {
 
     @Query("SELECT v FROM Vaga v Where (:salario is null or v.salario>=:salario) AND (:titulo is null or v.titulo like %:titulo%)")
     List<Vaga> findByFilter(double salario, String titulo);
+
 }

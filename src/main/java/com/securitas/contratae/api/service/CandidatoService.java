@@ -69,7 +69,7 @@ public class CandidatoService {
         if(candidato.getCandidaturas().contains(vaga)){
             throw new BusinessException("Candidato já está inscrito nesta vaga.");
         }
-
+    
         candidato.candidatar(vaga);
         vaga.candidatar(candidato);
 
